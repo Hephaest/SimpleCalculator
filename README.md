@@ -9,14 +9,14 @@
 >  7. 括号优先计算功能
 
 接下来通过流程图简单介绍一下思路：
-![流程图][1]
+![image](https://github.com/Hephaest/Simple-Java-Caculator/blob/master/images/163725038-5ad8ae0824e2a_articlex.png)
 ## GUI 源码
 以下代码是根据我的设计来编写的
 ```java
 /**
  * @author Hephaest
  * @since  2019/07/02
- * JDK 1.6
+ * JDK 1.8
  */
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -57,8 +57,8 @@ public class Calculator extends JFrame
 		//声明每一个按钮代表的意义
 		add(row2, BorderLayout.CENTER);
 		GridLayout layout2 = new GridLayout(4,5,5,5);
-    	row2.setLayout(layout2);
-    	for(int i = 0; i < buttons.length; i++)
+		row2.setLayout(layout2);
+		for(int i = 0; i < buttons.length; i++)
 		{
 			for(int j = 0; j < buttons[0].length; j++)
 			{
@@ -66,9 +66,9 @@ public class Calculator extends JFrame
 				row2.add(button[i][j]);
 			}
 		}
-    	add(row2);
-      setResizable(false);
-    	setVisible(true);
+		add(row2);
+		setResizable(false);
+		setVisible(true);
 	}
 	
 	private static void setLookAndFeel() 
@@ -106,14 +106,14 @@ public class Calculator extends JFrame
 }
 ```
 ### 效果
-![GUI][2]
+![image](https://github.com/Hephaest/Simple-Java-Caculator/blob/master/images/4241127484-5ad8b6ef42146_articlex.png)
 ## 事件监听器源码
 有了按钮后下一步就是要想办法实现按钮功能，我的思路在上面流程图里给过了，不再累赘，直接看如何利用代码实现：
 ```java
 /**
  * @author Hephaest
  * @since  2019/07/02
- * JDK 1.6
+ * JDK 1.8
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -159,7 +159,7 @@ public class Listener implements ActionListener
 				cl.text.setText("Input Error!");
 			}
 		} else if(button.getText().equals("×")) {
-        /**
+        	/**
     		 * 如果点击"×"，先把它转换为"*"
     		 */
 			if(list.isEmpty())
@@ -175,7 +175,7 @@ public class Listener implements ActionListener
 				cl.text.setText(output);
 			}
 		} else if(button.getText().equals("÷")) {
-        /**
+        	    /**
 		     * 如果点击"÷"，把它转换为"/"
 		     */
 			if(list.isEmpty())
@@ -191,25 +191,25 @@ public class Listener implements ActionListener
 				cl.text.setText(output);
 			}
 		} else if(button.getText().equals("DEL")) {
-        /**
+        	    /**
 		     * 如果点击"DEL"，删除表达式里最后一个字符，每点一次删一个
 		     */
 			if(list.isEmpty())
 			{
 				arr.remove(arr.size()-1);
-		    output = "";
-	      for(int i = 0; i < arr.size(); i++) output += arr.get(i);
+		    		output = "";
+	      			for(int i = 0; i < arr.size(); i++) output += arr.get(i);
 	 			out = output;
 	 			cl.text.setText(output);
 			} else {
-        list.remove(list.size()-1);
-        String output = "";
-        for(int i = 0; i < list.size(); i++) output+=list.get(i);
+				list.remove(list.size()-1);
+				String output = "";
+				for(int i = 0; i < list.size(); i++) output+=list.get(i);
 	 			out = output;
 	 			cl.text.setText(output);
 			}
 		} else if(button.getText().equals("AC")) {
-        /**
+        	/**
     		 * 如果点击"AC"，删除list链表，再删除之前先把表达式保留到his的链表里
     		 */
 			his.add(out);
@@ -217,7 +217,7 @@ public class Listener implements ActionListener
 			output="";
  			cl.text.setText(output);
 		} else if(button.getText().equals("Replay")) {
-        /**
+        	/**
     		 * 如果点击"Replay"，在文本框里显示上一条表达式
     		 */
 			output=his.get(his.size()-1);
@@ -231,7 +231,7 @@ public class Listener implements ActionListener
 			}
 			his.remove(his.size()-1);
 		} else {
-        /**
+        	/**
     		 * 其余按钮可以直接加入表达式
     		 */
 			if(list.isEmpty())
@@ -258,7 +258,7 @@ public class Listener implements ActionListener
 /**
  * @author Hephaest
  * @since  2018/07/13
- * JDK 1.6
+ * JDK 1.8
  */
 import java.util.LinkedList;
 import java.util.List;
@@ -283,13 +283,13 @@ public class function {
 		  //遇到左括号直接入栈
 		  if(ch[i] == '(') stack.push(ch[i]);
 		  else if(ch[i] == ')') {
-      //遇到右括号出栈(追加到后缀表达式), 直到出栈的元素为左括号或为0
-      char popValue = stack.pop();
-      do 
-      {
-        convertToPostfix = convertToPostfix.concat(String.valueOf(popValue));
-        popValue = stack.pop();
-      }while(!stack.isEmpty() && popValue != '(');
+			//遇到右括号出栈(追加到后缀表达式), 直到出栈的元素为左括号或为0
+			char popValue = stack.pop();
+			do 
+			{
+			convertToPostfix = convertToPostfix.concat(String.valueOf(popValue));
+			popValue = stack.pop();
+			}while(!stack.isEmpty() && popValue != '(');
 		  } else if(checkOperator(ch[i])) {
     		  /*
     		   * 遇到运算符需要判断：
@@ -298,18 +298,18 @@ public class function {
     		   * 	是，直接入栈
     		   *    否，栈顶元素出栈（追加到后缀表达式），当前运算符入栈
     		   */
-			  if(stack.isEmpty()) stack.push(ch[i]);
-			  else {
-				  char popValue = stack.pop();
-				  while(checkPriority(popValue,ch[i]))
-				  {
-					  convertToPostfix = convertToPostfix.concat(String.valueOf(popValue));
-					  if(stack.isEmpty()) break;
-					  popValue = stack.pop();
-				  }
-				  if(!checkPriority(popValue,ch[i])) stack.push(popValue);
-				  stack.push(ch[i]);
-			  }
+			if(stack.isEmpty()) stack.push(ch[i]);
+			else {
+				char popValue = stack.pop();
+				while(checkPriority(popValue,ch[i]))
+				{
+				  convertToPostfix = convertToPostfix.concat(String.valueOf(popValue));
+				  if(stack.isEmpty()) break;
+				  popValue = stack.pop();
+				}
+				if(!checkPriority(popValue,ch[i])) stack.push(popValue);
+				stack.push(ch[i]);
+			}
 		  } else if(checkDigital(ch[i])) {
     		  /*
     		   * 单个数字直接追加到后缀表达式
@@ -352,7 +352,7 @@ public class function {
 		return computeResult(convertToPostfix);
 	}
 	
-  /**
+  	/**
 	 * 计算后缀表达式
 	 * @param convertToPostfix 后缀表达式的字符串
 	 * @return 计算结果
@@ -400,7 +400,7 @@ public class function {
 				System.out.println(result);
 				stack.push(result);
 			} else {
-      /*
+      			/*
 			 * 对于多位操作符，需要把单个字符连接起来然后作为一个双精度数放入栈中
 			 * 一位数的操作符直接放入栈即可，注意从字符变成数字时要减去48(0的字符型数据)
 			 */
@@ -431,7 +431,7 @@ public class function {
 		return result;
 	}
 	
-  /**
+  	/**
 	 * 判断是否是运算符
 	 * @param c 当前字符
 	 * @return 布尔型结果
@@ -454,7 +454,7 @@ public class function {
 		else return false;
 	}
 	
-  /**
+ 	/**
 	 * 判断是否是数字
 	 * @param c 当前字符
 	 * @return 布尔型结果
@@ -467,7 +467,7 @@ public class function {
 		else return false;
 	}
 	
-  /**
+ 	/**
 	 * 判断即将入栈的优先级是否更高
 	 * @param popOne 栈顶元素
 	 * @param checkOne 即将入栈元素
