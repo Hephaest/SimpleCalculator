@@ -44,9 +44,8 @@ import javax.swing.UIManager;
  */
 public class Calculator extends JFrame
 {
-  //新建文本框
+  	//新建文本框
 	JTextField text = new JTextField();
-	// set up row 2
 	JPanel row2 = new JPanel();
 	//创建按钮们
 	String[][] buttons = {{"7","8","9","DEL","AC"},{"4","5","6","×","÷"},{"1","2","3","+","-"},{"0","(",")","Replay","="}};
@@ -144,7 +143,7 @@ public class Listener implements ActionListener
 	private Calculator cl;
 	private ArrayList<String> list=new ArrayList<String>();
 	private ArrayList<String> his=new ArrayList<String>();//这个链表用来添加每一次得到的最终的结果
-	private ArrayList<String> arr = new ArrayList<String>();//把his里的一整串字符分割成单个字符，再连接
+	private ArrayList<String> arr = new ArrayList<String>();//把list里的一整串字符分割成单个字符，再连接
 	private String[] arrayStr = new String[] {};//储存单次的历史记录
 	private String out = "";
 	private String output = "";
