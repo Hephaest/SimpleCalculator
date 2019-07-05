@@ -21,7 +21,9 @@
 >  7. 括号优先计算功能
 
 接下来通过流程图简单介绍一下思路：
-![image](images/163725038-5ad8ae0824e2a_articlex.png)
+
+<p align="center"><img src ="images/163725038-5ad8ae0824e2a_articlex.png"></p
+
 ## GUI 源码
 以下代码是根据我的设计来编写的
 ```java
@@ -117,7 +119,9 @@ public class Calculator extends JFrame
 }
 ```
 ### 效果
-![image](images/calculator.gif)
+
+<p align="center"><img src ="images/calculator.gif"></p>
+
 ## 事件监听器源码
 有了按钮后下一步就是要想办法实现按钮功能，我的思路在上面流程图里给过了，不再累赘，直接看如何利用代码实现：
 ```java
