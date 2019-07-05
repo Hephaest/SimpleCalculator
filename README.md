@@ -117,7 +117,7 @@ public class Calculator extends JFrame
 }
 ```
 ### 效果
-![image](https://github.com/Hephaest/Simple-Java-Caculator/blob/master/images/4241127484-5ad8b6ef42146_articlex.png)
+![image](https://github.com/Hephaest/Simple-Java-Caculator/blob/master/images/calculator.gif)
 ## 事件监听器源码
 有了按钮后下一步就是要想办法实现按钮功能，我的思路在上面流程图里给过了，不再累赘，直接看如何利用代码实现：
 ```java
