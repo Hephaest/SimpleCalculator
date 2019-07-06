@@ -6,14 +6,14 @@
       * [事件监听器源码](#事件监听器源码)
       * [计算器表达式算法](#计算器表达式算法)
       
-# Java 简易计算器
+# A Simple Java Calculator
 [![LICENSE](https://img.shields.io/cocoapods/l/AFNetworking.svg)](https://github.com/Hephaest/Simple-Java-Caculator/blob/master/LICENSE)
 [![JDK](https://img.shields.io/badge/JDK-8u202%20-orange.svg)](https://www.oracle.com/technetwork/java/javase/8u202-relnotes-5209339.html)
 [![Dependencies](https://img.shields.io/badge/Dependencies-up%20to%20date-green.svg)](https://github.com/Hephaest/Simple-Java-Caculator/tree/master/src)
 
-[English](README.md) | 中文
+English | [中文](README_CN.md)
 
-要制作一个简易计算器，首先你要清楚GUI里要显示什么：
+A simple calculator has following functionalities：
 >  1. 结果显示框
 >  2. 0～9的数字
 >  3. 删除功能
