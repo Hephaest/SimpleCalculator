@@ -1,11 +1,14 @@
 目录
 =================
+  * [效果](#效果)
   * [Java 简易计算器](#java-简易计算器)
       * [GUI 源码](#gui-源码)
-         * [效果](#效果)
       * [事件监听器源码](#事件监听器源码)
       * [计算器表达式算法](#计算器表达式算法)
-      
+
+# 效果
+<p align="center"><img src ="images/calculator.gif"></p>
+
 # Java 简易计算器
 [![LICENSE](https://img.shields.io/cocoapods/l/AFNetworking.svg)](https://github.com/Hephaest/Simple-Java-Caculator/blob/master/LICENSE)
 [![JDK](https://img.shields.io/badge/JDK-8u202%20-orange.svg)](https://www.oracle.com/technetwork/java/javase/8u202-relnotes-5209339.html)
@@ -45,19 +48,21 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 /**
- * Calculator类用来创造GUI
+ * Calculator 类用来创造 GUI。
  */
 public class Calculator extends JFrame
 {
-  	//新建文本框
+  	// 新建文本框。
 	JTextField text = new JTextField();
 	JPanel row2 = new JPanel();
-	//创建按钮们
+	
+	// 创建按钮们。
 	String[][] buttons = {{"7","8","9","DEL","AC"},{"4","5","6","×","÷"},{"1","2","3","+","-"},{"0","(",")","Replay","="}};
 	JButton[][]button = new JButton[4][5];
+	
 	/**
-	 * 这个计算机的界面我模拟的是卡西欧fx-82ES PLUS A
-	 * 但是仅有其中的部分功能
+	 * 这个计算机的界面我模拟的是卡西欧fx-82ES PLUS A。
+	 * 但是仅有其中的部分功能。
 	 */
 	public Calculator()
 	{
@@ -65,12 +70,14 @@ public class Calculator extends JFrame
 		setSize(400,300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
-		//设置文本框的尺寸、位置以及禁止键盘输入
+		
+		// 设置文本框的尺寸、位置以及禁止键盘输入。
 		text.setPreferredSize(new Dimension(30, 40));
 		text.setHorizontalAlignment(SwingConstants.TRAILING);
 		text.setEditable(false);
 		getContentPane().add(text, BorderLayout.NORTH);
-		//声明每一个按钮代表的意义
+		
+		// 声明每一个按钮代表的意义。
 		add(row2, BorderLayout.CENTER);
 		GridLayout layout2 = new GridLayout(4,5,5,5);
 		row2.setLayout(layout2);
@@ -89,14 +96,16 @@ public class Calculator extends JFrame
 	
 	private static void setLookAndFeel() 
 	{
-		//这条使跨操作系统也能看到计算机的GUI
-        try {
-            UIManager.setLookAndFeel(
-                "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"
-            );
-        } catch (Exception exc) {
-            // ignore error
-        }
+		// 这条使跨操作系统也能看到计算机的GUI。
+		try {
+		    UIManager.setLookAndFeel(
+			"com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel"
+		    );
+		} catch (Exception exc) {
+		    // ignore error
+		}
+	}
+		
     }
 	
 	public static void main(String[] args) 
@@ -105,8 +114,9 @@ public class Calculator extends JFrame
 		Calculator cl = new Calculator();
 		cl.listener();
 	}
+	
 	/**
-	 * 事件监听器，一旦按下按钮就要根据操作历史进行相应的反应
+	 * 事件监听器，一旦按下按钮就要根据操作历史进行相应的反应。
 	 */
 	public void listener()
 	{
@@ -121,10 +131,6 @@ public class Calculator extends JFrame
 	}
 }
 ```
-### 效果
-
-<p align="center"><img src ="images/calculator.gif"></p>
-
 ## 事件监听器源码
 有了按钮后下一步就是要想办法实现按钮功能，我的思路在上面流程图里给过了，不再累赘，直接看如何利用代码实现：
 ```java
@@ -143,28 +149,28 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 /**
  * Listener 类
- * 用来将按钮输入的结果通过链表的方式一个字一个字存储在字符串里，然后调用另一类计算整个字符串，返回一个值
+ * 用来将按钮输入的结果通过链表的方式一个字一个字存储在字符串里，然后调用另一类计算整个字符串，返回一个值。
  */
 public class Listener implements ActionListener
 {
 	private Calculator cl;
 	private ArrayList<String> list=new ArrayList<String>();
-	private ArrayList<String> his=new ArrayList<String>();//这个链表用来添加每一次得到的最终的结果
-	private ArrayList<String> arr = new ArrayList<String>();//把list里的一整串字符分割成单个字符，再连接
-	private String[] arrayStr = new String[] {};//储存单次的历史记录
+	private ArrayList<String> his=new ArrayList<String>();// 这个链表用来添加每一次得到的最终的结果。
+	private ArrayList<String> arr = new ArrayList<String>();// 把list里的一整串字符分割成单个字符，再连接。
+	private String[] arrayStr = new String[] {};// 储存单次的历史记录。
 	private String out = "";
 	private String output = "";
     
 	public Listener(Calculator cl)
-    {
+    	{
     	this.cl = cl;
-    }
+    	}
     
 	public void actionPerformed(ActionEvent event)
 	{
 		JButton button = (JButton) event.getSource();
 		/**
-		 * 如果点“=”，计算整个表达式的结果，如果是错误表达式，在文本框输入“Input Error!”
+		 * 如果点“=”，计算整个表达式的结果，如果是错误表达式，在文本框输入“Input Error!”。
 		 */
 		if(button.getText().equals("="))
 		{
@@ -178,7 +184,7 @@ public class Listener implements ActionListener
 			}
 		} else if(button.getText().equals("×")) {
         	/**
-    		 * 如果点击"×"，先把它转换为"*"
+    		 * 如果点击"×"，先把它转换为"*"。
     		 */
 			if(list.isEmpty())
 			{
@@ -194,7 +200,7 @@ public class Listener implements ActionListener
 			}
 		} else if(button.getText().equals("÷")) {
         	    /**
-		     * 如果点击"÷"，把它转换为"/"
+		     * 如果点击"÷"，把它转换为"/"。
 		     */
 			if(list.isEmpty())
 			{
@@ -210,7 +216,7 @@ public class Listener implements ActionListener
 			}
 		} else if(button.getText().equals("DEL")) {
         	    /**
-		     * 如果点击"DEL"，删除表达式里最后一个字符，每点一次删一个
+		     * 如果点击"DEL"，删除表达式里最后一个字符，每点一次删一个。
 		     */
 			if(list.isEmpty())
 			{
@@ -228,7 +234,7 @@ public class Listener implements ActionListener
 			}
 		} else if(button.getText().equals("AC")) {
         	/**
-    		 * 如果点击"AC"，删除list链表，再删除之前先把表达式保留到his的链表里
+    		 * 如果点击"AC"，删除 list 链表，再删除之前先把表达式保留到 list 的链表里。
     		 */
 			his.add(out);
 			list.clear();
@@ -236,11 +242,12 @@ public class Listener implements ActionListener
  			cl.text.setText(output);
 		} else if(button.getText().equals("Replay")) {
         	/**
-    		 * 如果点击"Replay"，在文本框里显示上一条表达式
+    		 * 如果点击"Replay"，在文本框里显示上一条表达式。
     		 */
 			output=his.get(his.size()-1);
 			cl.text.setText(output);
 			arr.clear();
+			
 			//把上一条表达式分割成单个字符的字符数组
 			char[] a=output.toCharArray();
 			for(int i=0;i<a.length;i++)
@@ -250,7 +257,7 @@ public class Listener implements ActionListener
 			his.remove(his.size()-1);
 		} else {
         	/**
-    		 * 其余按钮可以直接加入表达式
+    		 * 其余按钮可以直接加入表达式。
     		 */
 			if(list.isEmpty())
 			{
@@ -286,9 +293,9 @@ public class function {
 	private int begin;
 	public function(){}
 	/**
-	 * 中缀表达式转换成后缀表达式
-	 * @param exp 在计算器上显示的文本 中缀表达式
-	 * @return 正确的计算结果
+	 * 中缀表达式转换成后缀表达式。
+	 * @param exp 在计算器上显示的文本 中缀表达式。
+	 * @return 正确的计算结果。
 	 */
 	public double compute(String exp) 
 	{
@@ -298,10 +305,10 @@ public class function {
 		int size = ch.length;
 		begin = 0;
 		for (int i = 0; i < size; i++) {
-		  //遇到左括号直接入栈
+		  // 遇到左括号直接入栈。
 		  if(ch[i] == '(') stack.push(ch[i]);
 		  else if(ch[i] == ')') {
-			//遇到右括号出栈(追加到后缀表达式), 直到出栈的元素为左括号或为0
+			// 遇到右括号出栈(追加到后缀表达式), 直到出栈的元素为左括号或为0。
 			char popValue = stack.pop();
 			do 
 			{
@@ -311,10 +318,10 @@ public class function {
 		  } else if(checkOperator(ch[i])) {
     		  /*
     		   * 遇到运算符需要判断：
-    		   * 1.是否为空栈，是的话直接入栈
-    		   * 2.即将入栈的运算符是否比栈顶元素优先级高
-    		   * 	是，直接入栈
-    		   *    否，栈顶元素出栈（追加到后缀表达式），当前运算符入栈
+    		   * 1.是否为空栈，是的话直接入栈。
+    		   * 2.即将入栈的运算符是否比栈顶元素优先级高：
+    		   * 	是，直接入栈。
+    		   *    否，栈顶元素出栈（追加到后缀表达式），当前运算符入栈。
     		   */
 			if(stack.isEmpty()) stack.push(ch[i]);
 			else {
@@ -330,10 +337,10 @@ public class function {
 			}
 		  } else if(checkDigital(ch[i])) {
     		  /*
-    		   * 单个数字直接追加到后缀表达式
+    		   * 单个数字直接追加到后缀表达式。
     		   * 含有不止一个数字的操作符需要做记录：
-    		   * 	1.计算该操作符的起始位置和终止位置
-    		   * 	2.把数字传到字符串数组里（全局变量，下一步需要用到）
+    		   * 1.计算该操作符的起始位置和终止位置。
+    		   * 2.把数字传到字符串数组里（全局变量，下一步需要用到）。
     		   */
 			  if(i + 1 < size && i - 1 >= 0)
 			  {
@@ -360,7 +367,7 @@ public class function {
 			  convertToPostfix=convertToPostfix.concat(String.valueOf(ch[i]));
 		    }
 		 }
-		//第一遍结束后把栈中剩下的操作符依次出栈（追加到后缀表达式）
+		// 第一遍结束后把栈中剩下的操作符依次出栈（追加到后缀表达式）。
 		while(!stack.isEmpty())
 		{
 			char popValue = stack.pop();
@@ -371,16 +378,16 @@ public class function {
 	}
 	
   	/**
-	 * 计算后缀表达式
-	 * @param convertToPostfix 后缀表达式的字符串
-	 * @return 计算结果
+	 * 计算后缀表达式。
+	 * @param convertToPostfix 后缀表达式的字符串。
+	 * @return 计算结果。
 	 */
 	public double computeResult(String convertToPostfix)
 	{
 		int[] index=new int[10];
 		/*
-		 * 判断是否有多位数的操作符，有的话找到在后缀表达式的初始位置
-		 * 如果没有的话就不会执行
+		 * 判断是否有多位数的操作符，有的话找到在后缀表达式的初始位置。
+		 * 如果没有的话就不会执行。
 		 */
 		for(int i = 0;i < begin; i++)
 		{
@@ -391,7 +398,7 @@ public class function {
 		Stack <Double> stack = new Stack<>();
 		double result = 0;
 		for (int i = 0; i < ch.length; i++) {
-			//如果是运算符，pop出栈顶的两个元素，记住先进后出
+			// 如果是运算符，pop出栈顶的两个元素，记住先进后出。
 			if(checkOperator(ch[i]))
 			{
 				double num2=stack.pop();
@@ -419,8 +426,8 @@ public class function {
 				stack.push(result);
 			} else {
       			/*
-			 * 对于多位操作符，需要把单个字符连接起来然后作为一个双精度数放入栈中
-			 * 一位数的操作符直接放入栈即可，注意从字符变成数字时要减去48(0的字符型数据)
+			 * 对于多位操作符，需要把单个字符连接起来然后作为一个双精度数放入栈中。
+			 * 一位数的操作符直接放入栈即可，注意从字符变成数字时要减去48(0的字符型数据)。
 			 */
 				int stop = 0;
 				for(int j = 0; j < begin; j++)
@@ -450,9 +457,9 @@ public class function {
 	}
 	
   	/**
-	 * 判断是否是运算符
-	 * @param c 当前字符
-	 * @return 布尔型结果
+	 * 判断是否是运算符。
+	 * @param c 当前字符。
+	 * @return 布尔型结果。
 	 */
 	public boolean checkOperator(char c)
 	{
@@ -473,9 +480,9 @@ public class function {
 	}
 	
  	/**
-	 * 判断是否是数字
-	 * @param c 当前字符
-	 * @return 布尔型结果
+	 * 判断是否是数字。
+	 * @param c 当前字符。
+	 * @return 布尔型结果。
 	 */
 	public boolean checkDigital(char c)
 	{
@@ -486,10 +493,10 @@ public class function {
 	}
 	
  	/**
-	 * 判断即将入栈的优先级是否更高
-	 * @param popOne 栈顶元素
-	 * @param checkOne 即将入栈元素
-	 * @return 布尔型结果
+	 * 判断即将入栈的优先级是否更高。
+	 * @param popOne 栈顶元素。
+	 * @param checkOne 即将入栈元素。
+	 * @return 布尔型结果。
 	 */
 	public boolean checkPriority(char popOne,char checkOne)
 	{
