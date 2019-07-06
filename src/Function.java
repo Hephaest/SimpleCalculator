@@ -1,22 +1,21 @@
 /**
  * @author Hephaest
- * @since  2019/07/02
- * JDK 1.6
+ * @since  2018/07/13
+ * JDK 1.8
  */
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
-
-public class Function {
+public class function {
 	private String[] str=new String[10];
 	private int begin;
-	public Function(){}
+	public function(){}
 	/**
-	 * 中缀表达式转换成后缀表达式
-	 * @param exp 在计算器上显示的文本 中缀表达式
-	 * @return 正确的计算结果
+	 * Infix expression is converted to a postfix expression.
+	 * @param exp Infix expression.
+	 * @return the correct final result.
 	 */
-	public double compute(String exp)
+	public double compute(String exp) 
 	{
 		char[] ch = exp.toCharArray();
 		Stack <Character> stack = new Stack<>();
@@ -24,69 +23,69 @@ public class Function {
 		int size = ch.length;
 		begin = 0;
 		for (int i = 0; i < size; i++) {
-			//遇到左括号直接入栈
-			if(ch[i] == '(') stack.push(ch[i]);
-			else if(ch[i] == ')') {
-				//遇到右括号出栈(追加到后缀表达式), 直到出栈的元素为左括号或为0
+		  // the left parenthesis directly into the stack.
+		  if(ch[i] == '(') stack.push(ch[i]);
+		  else if(ch[i] == ')') {
+			// The right parenthesis is popped (appended to the suffix expression) until the element on the stack is left parenthesis or 0
+			char popValue = stack.pop();
+			do 
+			{
+			convertToPostfix = convertToPostfix.concat(String.valueOf(popValue));
+			popValue = stack.pop();
+			}while(!stack.isEmpty() && popValue != '(');
+		  } else if(checkOperator(ch[i])) {
+    		  /*
+    		   * If it is operator：
+    		   * 1. Push it into the stack if it is empty stack.
+    		   * 2. Check whether the operator has a higher priority than the top element of the stack.
+    		   * 	Push directly into the stack if the answer is yes.
+    		   *    Pop the top element of the stack (append to the suffix expression) and push the current operator into the stack.
+    		   */
+			if(stack.isEmpty()) stack.push(ch[i]);
+			else {
 				char popValue = stack.pop();
-				do
+				while(checkPriority(popValue,ch[i]))
 				{
-					convertToPostfix = convertToPostfix.concat(String.valueOf(popValue));
-					popValue = stack.pop();
-				}while(!stack.isEmpty() && popValue != '(');
-			} else if(checkOperator(ch[i])) {
-				/*
-				 * 遇到运算符需要判断：
-				 * 1.是否为空栈，是的话直接入栈
-				 * 2.即将入栈的运算符是否比栈顶元素优先级高
-				 *     是，直接入栈
-				 *    否，栈顶元素出栈（追加到后缀表达式），当前运算符入栈
-				 */
-				if(stack.isEmpty()) stack.push(ch[i]);
-				else {
-					char popValue = stack.pop();
-					while(checkPriority(popValue,ch[i]))
-					{
-						convertToPostfix = convertToPostfix.concat(String.valueOf(popValue));
-						if(stack.isEmpty()) break;
-						popValue = stack.pop();
-					}
-					if(!checkPriority(popValue,ch[i])) stack.push(popValue);
-					stack.push(ch[i]);
+				  convertToPostfix = convertToPostfix.concat(String.valueOf(popValue));
+				  if(stack.isEmpty()) break;
+				  popValue = stack.pop();
 				}
-			} else if(checkDigital(ch[i])) {
-				/*
-				 * 单个数字直接追加到后缀表达式
-				 * 含有不止一个数字的操作符需要做记录：
-				 *     1.计算该操作符的起始位置和终止位置
-				 *     2.把数字传到字符串数组里（全局变量，下一步需要用到）
-				 */
-				if(i + 1 < size && i - 1 >= 0)
-				{
-					if(checkDigital(ch[i - 1]) && !checkDigital(ch[i + 1]))
-					{
-						int end = i;
-						int j = end;
-						while(checkDigital(ch[j]))
-						{
-							j--;
-						}
-						j++;
-						List<String> elements = new LinkedList<>();
-						do
-						{
-							elements.add(String.valueOf(ch[j]));
-							j++;
-						} while(j <= end);
-						str[begin] = String.join("", elements);
-						System.out.println(str[begin]);
-						begin++;
-					}
-				}
-				convertToPostfix=convertToPostfix.concat(String.valueOf(ch[i]));
+				if(!checkPriority(popValue,ch[i])) stack.push(popValue);
+				stack.push(ch[i]);
 			}
-		}
-		//第一遍结束后把栈中剩下的操作符依次出栈（追加到后缀表达式）
+		  } else if(checkDigital(ch[i])) {
+    		  /*
+    		   * Append to the suffix expression if it is a digit.
+    		   * Operators with more than one number need to be checked:
+    		   * 	1. Calculate the start and end positions of the operator.
+    		   * 	2. Pass the number into the string array (global variables, the next step is needed).
+    		   */
+			  if(i + 1 < size && i - 1 >= 0)
+			  {
+				  if(checkDigital(ch[i - 1]) && !checkDigital(ch[i + 1]))
+				  {
+					  int end = i;
+					  int j = end;
+					  while(checkDigital(ch[j]))
+					  {
+						  j--;
+					  }
+					  j++;
+					  List<String> elements = new LinkedList<>();
+					  do
+					  {
+						  elements.add(String.valueOf(ch[j]));
+						  j++;
+					  } while(j <= end);
+					  str[begin] = String.join("", elements);
+					  System.out.println(str[begin]);
+					  begin++; 
+				  }
+			  }
+			  convertToPostfix=convertToPostfix.concat(String.valueOf(ch[i]));
+		    }
+		 }
+		// After the first traverse, the remaining operators in the stack are popped out of the stack (append to the suffix expression).
 		while(!stack.isEmpty())
 		{
 			char popValue = stack.pop();
@@ -95,18 +94,18 @@ public class Function {
 		System.out.println(convertToPostfix);
 		return computeResult(convertToPostfix);
 	}
-
-	/**
-	 * 计算后缀表达式
-	 * @param convertToPostfix 后缀表达式的字符串
-	 * @return 计算结果
+	
+  	/**
+	 * Calculate the suffix expression.
+	 * @param convertToPostfix String of postfix expressions.
+	 * @return calculate the final result.
 	 */
 	public double computeResult(String convertToPostfix)
 	{
 		int[] index=new int[10];
 		/*
-		 * 判断是否有多位数的操作符，有的话找到在后缀表达式的初始位置
-		 * 如果没有的话就不会执行
+		 * Determine if there is a multi-digit operator, and find the initial position of the suffix expression
+		 * if the answer is yes.
 		 */
 		for(int i = 0;i < begin; i++)
 		{
@@ -117,7 +116,7 @@ public class Function {
 		Stack <Double> stack = new Stack<>();
 		double result = 0;
 		for (int i = 0; i < ch.length; i++) {
-			//如果是运算符，pop出栈顶的两个元素，记住先进后出
+			// If it is an operator, pop the two elements at the top of the stack, remember to FILO.
 			if(checkOperator(ch[i]))
 			{
 				double num2=stack.pop();
@@ -144,10 +143,10 @@ public class Function {
 				System.out.println(result);
 				stack.push(result);
 			} else {
-				/*
-				 * 对于多位操作符，需要把单个字符连接起来然后作为一个双精度数放入栈中
-				 * 一位数的操作符直接放入栈即可，注意从字符变成数字时要减去48(0的字符型数据)
-				 */
+      			/*
+			 * For multi-bit operators, you need to concatenate a single character and put it on the stack as a double type.
+			 * One-digit operators can be placed directly on the stack. Note that 48 (0 character data) is subtracted from characters to numbers.
+			 */
 				int stop = 0;
 				for(int j = 0; j < begin; j++)
 				{
@@ -174,11 +173,11 @@ public class Function {
 		System.out.print(result);
 		return result;
 	}
-
-	/**
-	 * 判断是否是运算符
-	 * @param c 当前字符
-	 * @return 布尔型结果
+	
+  	/**
+	 * Check operator.
+	 * @param c current character.
+	 * @return boolean result.
 	 */
 	public boolean checkOperator(char c)
 	{
@@ -197,11 +196,11 @@ public class Function {
 		if(result == 1) return true;
 		else return false;
 	}
-
-	/**
-	 * 判断是否是数字
-	 * @param c 当前字符
-	 * @return 布尔型结果
+	
+ 	/**
+	 * Check digits.
+	 * @param c current character.
+	 * @return boolean result.
 	 */
 	public boolean checkDigital(char c)
 	{
@@ -210,12 +209,12 @@ public class Function {
 		if(num >= 0 && num <= 9) return true;
 		else return false;
 	}
-
-	/**
-	 * 判断即将入栈的优先级是否更高
-	 * @param popOne 栈顶元素
-	 * @param checkOne 即将入栈元素
-	 * @return 布尔型结果
+	
+ 	/**
+	 * Compare priority.
+	 * @param popOne the top element of the stack.
+	 * @param checkOne the pushed element.
+	 * @return boolean result.
 	 */
 	public boolean checkPriority(char popOne,char checkOne)
 	{
