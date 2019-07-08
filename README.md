@@ -17,7 +17,8 @@
 
 English | [中文](README_CN.md)
 
-Last updated on `2019/07/08`<br>
+Last updated on `2019/07/08`
+
 A simple calculator has following functionalities：
 1. Results display box
 2. Numbers from 0～9
